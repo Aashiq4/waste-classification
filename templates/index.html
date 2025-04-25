@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Waste Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>♻️ Waste Classifier</h1>
+        <p>Select a waste item image to know whether it's recyclable or not.</p>
+
+        <form method="POST" enctype="multipart/form-data" onsubmit="showLoader()">
+            <input type="file" name="image" accept="image/*" required>
+            <button type="submit">🔍 Classify</button>
+        </form>
+
+        <div id="loader" class="loader-container" style="display: none;">
+            <div class="spinner"></div>
+            <p>Processing image, please wait...</p>
+        </div>
+
+        {% if prediction %}
+            <div class="result">
+                <h2>{{ prediction }}</h2>
+                <img src="{{ image_url }}" alt="Uploaded Image" class="preview">
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function showLoader() {
+            document.querySelector('form').style.display = 'none';
+            document.getElementById('loader').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
+
